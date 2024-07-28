@@ -9,28 +9,36 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import environ
+import django
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Environtment
-env_config = environ.Env()
-environ.Env.read_env(BASE_DIR.joinpath('.env'))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env_config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# APP metadata
+APP_INFO = {
+    "app_name": 'events_manager',
+    "version": '0.0.1',
+    "description": 'App for learning Django',
+    "author": 'Mateo',
+    "license": 'MIT',
+    "url": 'https://github.com/MateoVelasquez/events_manager',
+    "email": 'mateo10velasquez@hotmail.com',
+    "keywords": ['Django', 'events', 'learning'],
+    "django_version": django.get_version()
+}
 
 # Application definition
 
@@ -41,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'appinfo'
 ]
 
 MIDDLEWARE = [
@@ -77,11 +86,11 @@ WSGI_APPLICATION = 'event_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DB_NAME = env_config('DB_NAME')
-DB_USER = env_config('DB_USER')
-DB_PASSWORD = env_config('DB_PASSWORD')
-DB_HOST = env_config('DB_HOST')
-DB_PORT = env_config('DB_PORT')
+DB_NAME = config('DB_NAME')
+DB_USER = config('DB_USER')
+DB_PASSWORD = config('DB_PASSWORD')
+DB_HOST = config('DB_HOST')
+DB_PORT = config('DB_PORT')
 
 DATABASES = {
     'default': {
